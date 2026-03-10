@@ -1,5 +1,9 @@
 /*  
-* 
+* Name: Train Project
+* Author: Vincent Stridh
+* Date: 2026-03-10
+* Description: this project uses a dc motor and an IR reader to allow the user to use a remote to drive a train forwards or backwards
+* Further, I might allow the user to change tracks as well.
 */  
 //Constants
 #include <IRremote.h>
