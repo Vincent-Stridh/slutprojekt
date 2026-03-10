@@ -5,9 +5,10 @@
 * Description: this project uses a dc motor and an IR reader to allow the user to use a remote to drive a train forwards or backwards
 * Further, I might allow the user to change tracks as well.
 */  
-//Constants
+//Libraries
 #include <IRremote.h>
 
+//Constants
 const int relayPin = 8;
 const int RECV_PIN = 11;
 
