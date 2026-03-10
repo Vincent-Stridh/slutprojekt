@@ -9,7 +9,8 @@
 #include <IRremote.h>
 
 //Constants
-const int relayPin = 8;
+const int relay1Pin = 8;
+const int relay2Pin = ;
 const int RECV_PIN = 11;
 
 //Variables
