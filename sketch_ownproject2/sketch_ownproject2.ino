@@ -10,7 +10,7 @@
 
 //Constants
 const int relay1Pin = 8;
-const int relay2Pin = ;
+const int relay2Pin = 7;
 const int RECV_PIN = 11;
 
 //Variables
@@ -18,26 +18,38 @@ int IRValue;
 
 //Objects
 IRrecv irrecv(RECV_PIN);
-decode_results  results;
+decode_results results;
 
 void setup() {
   irrecv.enableIRIn();
-  pinMode(relayPin, OUTPUT);
+  pinMode(relay1Pin, OUTPUT);
+  pinMode(relay2Pin, OUTPUT);
   pinMode(RECV_PIN, INPUT);
   Serial.begin(9600);
-  digitalWrite(relayPin, LOW);
+  digitalWrite(relay1Pin, LOW);
+  digitalWrite(relay1Pin, LOW);
 }
 
 void loop() {
-  if (irrecv.decode(&results))  {
+  if (irrecv.decode(&results)) {
     Serial.println(results.value, HEX);
-    irrecv.resume(); // Receive  the next value
-    digitalWrite(relayPin, HIGH);
-    Serial.println("HIGH");
-  }
-  else {
-    digitalWrite(relayPin, LOW);
-    Serial.println("LOW");
+    if(results.value == 0xFF629D) { // forward button
+      digitalWrite(relay1Pin, HIGH);
+      digitalWrite(relay2Pin, LOW);
+      Serial.println("FRONT");
+    }
+
+    if(results.value == 0xFFA857) { // stop button
+      digitalWrite(relay1Pin, LOW);
+      digitalWrite(relay2Pin, HIGH);
+      Serial.println("BACK");
+    }
+    if(results.value != 0xFFA857 && results.value != 0xFF629D) {
+      digitalWrite(relay1Pin, LOW);
+      digitalWrite(relay2Pin, LOW);
+      Serial.println("OFF");
+    }
+    irrecv.resume();
   }
   delay(100);
 }
