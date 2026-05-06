@@ -1,7 +1,7 @@
 /*  
 * Name: Train Project
 * Author: Vincent Stridh
-* Date: 2026-03-10
+* Date: 2026-05-06
 * Description: this project uses a dc motor and an IR reader to allow the user to use a remote to drive a train forwards or backwards
 * Further, I might allow the user to change tracks as well.
 */  
@@ -34,14 +34,14 @@ void loop() {
   if (irrecv.decode(&results)) {
     Serial.println(results.value, HEX);
     if(results.value == 0xFF629D) { // forward button
-      digitalWrite(relay1Pin, HIGH);
-      digitalWrite(relay2Pin, LOW);
+      digitalWrite(relay1Pin, LOW);
+      digitalWrite(relay2Pin, HIGH);
       Serial.println("FRONT");
     }
 
     if(results.value == 0xFFA857) { // stop button
-      digitalWrite(relay1Pin, LOW);
-      digitalWrite(relay2Pin, HIGH);
+      digitalWrite(relay1Pin, HIGH);
+      digitalWrite(relay2Pin, LOW);
       Serial.println("BACK");
     }
     if(results.value != 0xFFA857 && results.value != 0xFF629D) {
