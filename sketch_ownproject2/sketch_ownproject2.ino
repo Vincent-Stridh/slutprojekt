@@ -1,7 +1,7 @@
 /*  
 * Name: Train Project
 * Author: Vincent Stridh
-* Date: 2026-05-06
+* Date: 2026-05-13
 * Description: this project uses a dc motor and an IR reader to allow the user to use a remote to drive a train forwards or backwards
 * Further, I might allow the user to change tracks as well.
 */  
@@ -11,7 +11,7 @@
 //Constants
 const int relay1Pin = 8;
 const int relay2Pin = 7;
-const int RECV_PIN = 11;
+const int RECV_PIN = 4;
 
 //Variables
 int IRValue;
@@ -27,7 +27,7 @@ void setup() {
   pinMode(RECV_PIN, INPUT);
   Serial.begin(9600);
   digitalWrite(relay1Pin, LOW);
-  digitalWrite(relay1Pin, LOW);
+  digitalWrite(relay2Pin, LOW);
 }
 
 void loop() {
@@ -38,19 +38,16 @@ void loop() {
       digitalWrite(relay2Pin, HIGH);
       Serial.println("FRONT");
     }
-
-    if(results.value == 0xFFA857) { // stop button
+    else if(results.value == 0xFFA857) { // back button
       digitalWrite(relay1Pin, HIGH);
       digitalWrite(relay2Pin, LOW);
       Serial.println("BACK");
     }
-    if(results.value != 0xFFA857 && results.value != 0xFF629D) {
+    else { // any other button/off button
       digitalWrite(relay1Pin, LOW);
       digitalWrite(relay2Pin, LOW);
       Serial.println("OFF");
     }
     irrecv.resume();
   }
-  delay(100);
 }
-
